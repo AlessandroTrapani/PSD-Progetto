@@ -1,33 +1,36 @@
-# Nome dell'eseguibile
-TARGET = programma
-
-# Compilatore
+# Compilatore da utilizzare
 CC = gcc
 
-# Opzioni di compilazione
+# Opzioni di compilazione:
+# -Wall: Abilita tutti i warning principali
+# -g:    Aggiunge informazioni di debug all'eseguibile
 CFLAGS = -Wall -g
 
-# File sorgente
-SRCS = main.c lista.c attivita_studio.c
+# Nome dell'eseguibile finale
+TARGET = programma
 
-# File oggetto (derivati dai sorgenti)
-OBJS = $(SRCS:.c=.o)
+# Elenco dei file sorgente .c
+SOURCES = main.c lista.c attivita_studio.c
 
-# Regola di default per costruire il programma
+# Derivazione automatica dei nomi dei file oggetto (.o) dai file sorgente
+# Sostituisce l'estensione .c con .o per ogni file in SOURCES
+OBJECTS = $(SOURCES:.c=.o)
+
+# Target di default: quello che viene eseguito se si digita solo "make"
+# Dipende dal target specificato in $(TARGET)
 all: $(TARGET)
 
-# Regola per costruire l'eseguibile
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+# Regola per creare l'eseguibile finale
+$(TARGET): $(OBJECTS)
+	$(CC) $(LDFLAGS) -o $@ $^
 
-# Regola per compilare i file .c in .o
+# Regola generica per compilare un file .c in un file .o
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Pulisce i file generati
+# Target "clean": per rimuovere i file generati dalla compilazione
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(TARGET) $(OBJECTS)
 
-# Pulisce i file temporanei di backup
-mrproper: clean
-	rm -f *~ *.bak
+# Dichiarazione dei target "phony" (fittizi)
+.PHONY: all clean
