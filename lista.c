@@ -1,0 +1,217 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <stdbool.h>
+#include "attivita_studio.h" 
+#include "lista.h"
+
+// Definizione della struttura node
+struct node 
+{
+    attivita_studio value;
+    struct node *next;
+};
+
+// Definizione della funzione newList per creare una nuova lista vuota
+list newList(void)
+{
+    return NULL; // Restituisce NULL, indicando una lista vuota
+}
+
+// Funzione per verificare se la lista e' vuota
+bool emptyList(list l)
+{
+    return l == NULL; // Restituisce 1 se la lista e' vuota (NULL), altrimenti restituisce 0
+}
+
+// Funzione per aggiungere un nuovo elemento in testa alla lista
+list consList(attivita_studio val, list l)
+{
+	struct node *nuovo; // Dichiarazione di un puntatore a un nuovo nodo
+    nuovo =(struct node *) malloc(sizeof(struct node)); // Allocazione della memoria per il nuovo nodo
+    if (nuovo == NULL)  // Verifica se l'allocazione della memoria e' riuscita
+	{ 
+		printf("Errore allocazione di memoria \n");
+    	exit (1);
+    }
+    else //Copia dei campi dell'attivit  nella nuova struttura nodo(nuovo) tramite strdup per allocare nuova memoria e copiare il contenuto delle stringhe in modo che ogni nodo abbia i propri dati indipendenti
+    {
+	    nuovo->value.descrizione = strdup(val.descrizione);
+	    nuovo->value.corso = strdup(val.corso);
+	    nuovo->value.data_scadenza = strdup(val.data_scadenza);
+	    nuovo->value.data_inizio = strdup(val.data_inizio);
+	    nuovo->value.priorita = strdup(val.priorita);
+	    //Copia diretta dei campi di tipo intero
+	    nuovo->value.tempo_stimato = val.tempo_stimato;
+	    nuovo->value.completamento = val.completamento;
+	    
+	    //Inserimento in testa alla lista
+		nuovo->next=l;
+		l=nuovo;
+	}
+	
+    return l; // Restituisce il puntatore alla lista aggiornata
+}
+
+//Stampa la lista delle attivit  a schermo
+void outputList(list l)
+{
+    int i=1;
+	
+	while (l != NULL) 
+	{
+        printf("ATTIVITA' NUMERO %d \n",i++);
+		printf("Descrizione: %s \n", l->value.descrizione);
+        printf("Corso: %s \n", l->value.corso);
+        printf("Data di inizio: %s \n", l->value.data_inizio);
+        printf("Data di scadenza: %s \n", l->value.data_scadenza);
+        printf("Tempo stimato: %d ore \n", l->value.tempo_stimato);
+        printf("Completamento: %d%% \n", l->value.completamento);
+        printf("Priorita': %s \n", l->value.priorita);
+        printf("\n");
+        l = l->next; // Passa al nodo successivo
+    }
+}
+
+//Scrive la lista sul file
+int output_file(list l,FILE *ptr)
+{
+    int i=0;
+	ptr=fopen(file_registro, "w");
+    if(ptr==NULL)
+    {
+    	printf("Errore apertura file \n");
+    	return 0;
+	}
+	else
+	{
+		while (l != NULL) 
+		{
+	        fprintf(ptr,"%d \n",++i);
+			fprintf(ptr,"%s \n", l->value.descrizione);
+	        fprintf(ptr,"%s \n", l->value.corso);
+	        fprintf(ptr,"%s \n", l->value.data_inizio);
+	        fprintf(ptr,"%s \n", l->value.data_scadenza);
+	        fprintf(ptr,"%d ore \n", l->value.tempo_stimato);
+	        fprintf(ptr,"%d%% \n", l->value.completamento);
+	        fprintf(ptr,"%s \n", l->value.priorita);
+	        fprintf(ptr,"\n");
+	        l = l->next; // Passa al nodo successivo
+	    }
+	    fclose(ptr);
+	}
+	return i;
+}
+
+//Modifica il completamento di una specifica attivit 
+void modifica_lista(list l)
+{
+    int i,indice;
+    int lunghezza=0;
+	list temp=l;
+	
+	//Conta il numero di attivit 
+	while(temp!=NULL)
+	{
+		lunghezza++;
+		temp=temp->next;
+	}
+	
+	//Richiede l'indice dell'attivit  da modificare
+	do
+	{
+		printf("Inserisci il numero dell'attivita' da modificare: ");
+	    scanf("%d",&indice);
+	    getchar();
+	    
+	    if(indice<1||indice>lunghezza)
+	    {
+	    	printf("Numero attivita' non valido. Inserisci un numero compreso tra 1 e %d \n",lunghezza);
+		}
+	}while(indice<1||indice>lunghezza);
+	
+	//Arriva alla posizione specificata
+    for(i=1;i<indice;i++)
+    {
+    	l=l->next;
+	}
+	
+	//Modifica il campo "completamento"
+	do
+	{
+		char buffer[100];
+		printf("Inserisci la nuova percentuale di completamento (percentuale 0-100): ");
+		fgets(buffer, sizeof(buffer), stdin);
+    
+    	if(sscanf(buffer, "%d",&l->value.completamento)!=1||l->value.completamento<0||l->value.completamento>100)
+    	{
+    		printf("Valore o formato non valido,inserisci un valore tra 0 e 100 \n");
+    		l->value.completamento=-1;
+		}
+	}while(l->value.completamento<0||l->value.completamento>100);
+}
+
+//Funzione per visualizzare e copiare sul file le attivit  presenti nella lista
+void report_settimanale(list l,FILE *ptr)
+{
+    int i=1;
+    time_t t=time(NULL); 
+    struct tm *oggi=localtime(&t); //DIchiarazione di una struct per memorizzare la data di sistema
+	char *stato=NULL;
+	ptr=fopen(file_report, "w");
+    if(ptr==NULL) //Viene segnalato che il file non viene aperto,ma il programma esegue ugualmente la stampa a video della lista attivit 
+    {
+    	printf("Errore apertura file \n");
+	}
+	while (l != NULL) 
+	{
+        printf("REPORT GIORNO: %d/%d/%d \n",oggi->tm_mday,oggi->tm_mon+1,oggi->tm_year+1900);
+		printf("ATTIVITA' NUMERO %d \n",i);
+        printf("Corso: %s \n", l->value.corso);
+        printf("Data di scadenza: %s \n", l->value.data_scadenza);
+        printf("Completamento: %d%% \n", l->value.completamento);
+        printf("Priorita': %s \n", l->value.priorita);
+       	
+       //Controlli per lo stato dell'attivit  
+	   	if(l->value.completamento==100)
+        {
+        	stato="STATO: COMPLETATO \n";
+		}
+		else
+		{
+			int giorno,mese,anno;
+			
+			sscanf(l->value.data_scadenza,"%d/%d/%d",&giorno,&mese,&anno);
+			
+			//Confronta con data odierna
+			if((anno<oggi->tm_year+1900)||(anno==oggi->tm_year+1900&&mese<oggi->tm_mon+1)||(anno==oggi->tm_year+1900&&mese==oggi->tm_mon+1&&giorno<oggi->tm_mday))
+			{
+				stato="STATO: IN RITARDO \n";
+			}
+			else
+			{
+				stato="STATO: IN CORSO \n";
+			}
+		}
+		printf("%s \n",stato);
+		printf("\n");
+		
+		//Se il puntatore al file non   NULL, copia sul file ogni attivit  della lista. 
+		if(ptr!=NULL)
+		{	    
+			fprintf(ptr,"REPORT GIORNO: %d/%d/%d \n",oggi->tm_mday,oggi->tm_mon+1,oggi->tm_year+1900);
+			fprintf(ptr,"ATTIVITA' NUMERO %d \n",i);
+			fprintf(ptr,"Corso: %s \n", l->value.corso);
+		    fprintf(ptr,"Data di scadenza: %s \n", l->value.data_scadenza);
+		    fprintf(ptr,"Completamento: %d%% \n", l->value.completamento);
+		    fprintf(ptr,"Priorita': %s \n", l->value.priorita);
+			fprintf(ptr,"%s \n",stato);
+			fprintf(ptr,"\n");	
+		}
+        
+		i++;
+		l = l->next; // Passa al nodo successivo
+    }
+    fclose(ptr);
+}
