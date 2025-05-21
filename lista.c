@@ -35,7 +35,7 @@ list consList(attivita_studio val, list l)
 		printf("Errore allocazione di memoria \n");
 	    	exit (1);
         }
-    else //Copia dei campi dell'attivit  nella nuova struttura nodo(nuovo) tramite strdup per allocare nuova memoria e copiare il contenuto delle stringhe in modo che ogni nodo abbia i propri dati indipendenti
+    else //Copia dei campi dell'attivita'  nella nuova struttura nodo(nuovo) tramite strdup per allocare nuova memoria e copiare il contenuto delle stringhe in modo che ogni nodo abbia i propri dati indipendenti
     {
 	    nuovo->value.descrizione = strdup(val.descrizione);
 	    nuovo->value.corso = strdup(val.corso);
@@ -54,7 +54,7 @@ list consList(attivita_studio val, list l)
     return l; // Restituisce il puntatore alla lista aggiornata
 }
 
-//Stampa la lista delle attivit  a schermo
+//Stampa la lista delle attivita' a schermo
 void outputList(list l)
 {
     int i=1;
@@ -104,21 +104,21 @@ int output_file(list l,FILE *ptr)
 	return i;
 }
 
-//Modifica il completamento di una specifica attivit 
+//Modifica il completamento di una specifica attivita' 
 void modifica_lista(list l)
 {
     int i,indice;
     int lunghezza=0;
 	list temp=l;
 	
-	//Conta il numero di attivit 
+	//Conta il numero di attivita' 
 	while(temp!=NULL)
 	{
 		lunghezza++;
 		temp=temp->next;
 	}
 	
-	//Richiede l'indice dell'attivit  da modificare
+	//Richiede l'indice dell'attivita'  da modificare
 	do
 	{
 	    printf("Inserisci il numero dell'attivita' da modificare: ");
@@ -135,7 +135,7 @@ void modifica_lista(list l)
     for(i=1;i<indice;i++)
     {
     	l=l->next;
-	}
+    }
 	
 	//Modifica il campo "completamento"
 	do
@@ -152,15 +152,15 @@ void modifica_lista(list l)
 	}while(l->value.completamento<0||l->value.completamento>100);
 }
 
-//Funzione per visualizzare e copiare sul file le attivit  presenti nella lista
+//Funzione per visualizzare e copiare sul file le attivita'  presenti nella lista
 void report_settimanale(list l,FILE *ptr)
 {
     int i=1;
     time_t t=time(NULL); 
-    struct tm *oggi=localtime(&t); //DIchiarazione di una struct per memorizzare la data di sistema
+    struct tm *oggi=localtime(&t); //Dichiarazione di una struct per memorizzare la data di sistema
     char *stato=NULL;
     ptr=fopen(file_report, "w");
-    if(ptr==NULL) //Viene segnalato che il file non viene aperto,ma il programma esegue ugualmente la stampa a video della lista attivit 
+    if(ptr==NULL) //Viene segnalato che il file non viene aperto,ma il programma esegue ugualmente la stampa a video della lista attivita' 
     {
     	printf("Errore apertura file \n");
     }
@@ -197,7 +197,7 @@ void report_settimanale(list l,FILE *ptr)
 		printf("%s \n",stato);
 		printf("\n");
 		
-		//Se il puntatore al file non   NULL, copia sul file ogni attivit  della lista. 
+		//Se il puntatore al file non e' NULL, copia sul file ogni attivita'  della lista. 
 		if(ptr!=NULL)
 		{	    
 			fprintf(ptr,"REPORT GIORNO: %d/%d/%d \n",oggi->tm_mday,oggi->tm_mon+1,oggi->tm_year+1900);
