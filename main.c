@@ -13,8 +13,8 @@ int main()
 	int conta_righe;
 	int scelta,modifica;
 	char buffer[1024];
-    size_t lunghezza;
-    char *tmp;
+    	size_t lunghezza;
+    	char *tmp;
     
     //Allocazione dinamica per una nuova attività
 	attivita_studio *nuovo=(attivita_studio *) malloc(sizeof(attivita_studio));
@@ -22,7 +22,7 @@ int main()
 	{
         printf("Errore allocazione di memoria. \n");
         return 1;
-    }
+    	}
     
     //Inizializzazione dei puntatori a NULL
     nuovo->descrizione =NULL;
@@ -65,7 +65,7 @@ int main()
 						{
 					        printf("Errore allocazione memoria.\n");
 					        exit(1);
-					    }
+					    	}
 					    nuovo->descrizione = tmp;
 					    strcpy(nuovo->descrizione, buffer);
 					    break;
@@ -75,7 +75,7 @@ int main()
 						{
 					        printf("Errore allocazione memoria.\n");
 					        exit(1);
-					    }
+					    	}
 					    nuovo->corso = tmp;
 					    strcpy(nuovo->corso, buffer);
 					    break;
@@ -166,7 +166,7 @@ int main()
 						{
 							outputList(l);
 							
-							//ALtro menù interattivo per l'utente
+							//Altro menù interattivo per l'utente
 							printf("0 - TORNA AL MENU' PRINCIPALE \n");
 							printf("1 - MODIFICA ATTIVITA' \n"); //Permette di modificare la percentuale di completamento di un'attività specifica
 							scanf("%d", &modifica);
@@ -208,10 +208,10 @@ int main()
 	
 	//Libera la memoria allocata
 	free(nuovo->descrizione);
-    free(nuovo->corso);
-    free(nuovo->data_scadenza);
-    free(nuovo->data_inizio);
-    free(nuovo->priorita);
+	free(nuovo->corso);
+	free(nuovo->data_scadenza);
+	free(nuovo->data_inizio);
+	free(nuovo->priorita);
 	free(nuovo);
 	
 	return 0;
