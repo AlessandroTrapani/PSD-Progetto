@@ -12,12 +12,10 @@ TARGET = programma
 # Elenco dei file sorgente .c
 SOURCES = main.c lista.c attivita_studio.c
 
-# Derivazione automatica dei nomi dei file oggetto (.o) dai file sorgente
 # Sostituisce l'estensione .c con .o per ogni file in SOURCES
 OBJECTS = $(SOURCES:.c=.o)
 
 # Target di default: quello che viene eseguito se si digita solo "make"
-# Dipende dal target specificato in $(TARGET)
 all: $(TARGET)
 
 # Regola per creare l'eseguibile finale
