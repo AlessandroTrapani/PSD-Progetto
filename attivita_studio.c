@@ -119,7 +119,7 @@ do //Ciclo per chiedere la data di inizio e di scadenza
     char *priorita1="BASSA";
     char *priorita2="MEDIA";
     char *priorita3="ALTA";
-    do //Ciclo per inserire la priorit  dell'attivit  con controllo per il formato
+    do //Ciclo per inserire la priorita'  dell'attivita'  con controllo per il formato
     {
 	    printf("Inserisci la priorita' (utilizza questo formato: BASSA,MEDIA,ALTA): ");
 	    fgets(buffer, sizeof(buffer), stdin);
