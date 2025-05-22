@@ -159,14 +159,15 @@ void report_settimanale(list l,FILE *ptr)
     time_t t=time(NULL); 
     struct tm *oggi=localtime(&t); //Dichiarazione di una struct per memorizzare la data di sistema
     char *stato=NULL;
-    ptr=fopen(file_report, "w");
+    ptr=fopen(file_report, "a");
     if(ptr==NULL) //Viene segnalato che il file non viene aperto,ma il programma esegue ugualmente la stampa a video della lista attivita' 
     {
     	printf("Errore apertura file \n");
     }
+	 	printf("REPORT DEL GIORNO: %d/%d/%d \n",oggi->tm_mday,oggi->tm_mon+1,oggi->tm_year+1900);
+		fprintf(ptr,"REPORT DEL GIORNO: %d/%d/%d \n",oggi->tm_mday,oggi->tm_mon+1,oggi->tm_year+1900);
 	while (l != NULL) 
 	{
-	        printf("REPORT GIORNO: %d/%d/%d \n",oggi->tm_mday,oggi->tm_mon+1,oggi->tm_year+1900);
 		printf("ATTIVITA' NUMERO %d \n",i);
 	        printf("Corso: %s \n", l->value.corso);
 	        printf("Data di scadenza: %s \n", l->value.data_scadenza);
@@ -176,7 +177,7 @@ void report_settimanale(list l,FILE *ptr)
                 //Controlli per lo stato dell'attività  
 	   	if(l->value.completamento==100)
         	{
-        		stato="STATO: COMPLETATO \n";
+        		stato="STATO: COMPLETATO";
 		}
 		else
 		{
@@ -187,11 +188,11 @@ void report_settimanale(list l,FILE *ptr)
 			//Confronta con data odierna
 			if((anno<oggi->tm_year+1900)||(anno==oggi->tm_year+1900&&mese<oggi->tm_mon+1)||(anno==oggi->tm_year+1900&&mese==oggi->tm_mon+1&&giorno<oggi->tm_mday))
 			{
-				stato="STATO: IN RITARDO \n";
+				stato="STATO: IN RITARDO";
 			}
 			else
 			{
-				stato="STATO: IN CORSO \n";
+				stato="STATO: IN CORSO";
 			}
 		}
 		printf("%s \n",stato);
@@ -200,7 +201,6 @@ void report_settimanale(list l,FILE *ptr)
 		//Se il puntatore al file non e' NULL, copia sul file ogni attivita'  della lista. 
 		if(ptr!=NULL)
 		{	    
-			fprintf(ptr,"REPORT GIORNO: %d/%d/%d \n",oggi->tm_mday,oggi->tm_mon+1,oggi->tm_year+1900);
 			fprintf(ptr,"ATTIVITA' NUMERO %d \n",i);
 			fprintf(ptr,"Corso: %s \n", l->value.corso);
 			fprintf(ptr,"Data di scadenza: %s \n", l->value.data_scadenza);
@@ -212,8 +212,8 @@ void report_settimanale(list l,FILE *ptr)
         
 		i++;
 		l = l->next; // Passa al nodo successivo
-    }
-    fclose(ptr);
+    	}
+    	fclose(ptr);
 }
 
 // Funzione per liberare tutta la memoria della lista
