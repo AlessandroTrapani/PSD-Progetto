@@ -42,7 +42,7 @@ int main()
 	}
 	else
 	{
-		printf("File caricato correttamente. \n");
+		printf("File caricato correttamente,esci dal programma premendo 0 per salvare correttamente le attivita' di studio. \n");
 		conta_righe=0;
 		
 		//Lettura riga per riga del file
