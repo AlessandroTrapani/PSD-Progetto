@@ -147,4 +147,23 @@ Nessun valore (void).
 */
 void report_settimanale(list l,FILE *ptr);
 
+/*
+Funzione: libera_lista
+****************************************
+La funzione libera la memoria allocata tramite strdup di tutti i nodi della lista
+
+Parametri:
+l: lista di tipo list da cui liberare la memoria
+
+Pre-condizione:
+-La lista 'l' deve esistere e contenere almeno un attivita' di studio
+
+Post-condizione:
+-La memoria viene liberata
+
+Ritorna:
+Nessun valore(void).
+*/
+void libera_lista(list l);
+
 #endif
