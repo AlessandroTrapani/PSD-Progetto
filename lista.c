@@ -215,3 +215,21 @@ void report_settimanale(list l,FILE *ptr)
     }
     fclose(ptr);
 }
+
+// Funzione per liberare tutta la memoria della lista
+void libera_lista(list l) 
+{
+    while (l != NULL)
+    {
+        list temp = l;
+        l = l->next;
+        // Libera tutte le stringhe allocate con strdup
+        free(temp->value.descrizione);
+        free(temp->value.corso);
+        free(temp->value.data_scadenza);
+        free(temp->value.data_inizio);
+        free(temp->value.priorita);
+        // Libera il nodo
+        free(temp);
+    }
+}
