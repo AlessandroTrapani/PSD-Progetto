@@ -160,7 +160,7 @@ int main()
 							
 							//Altro menù interattivo per l'utente
 							printf("0 - TORNA AL MENU' PRINCIPALE \n");
-							printf("1 - MODIFICA ATTIVITA' \n"); //Permette di modificare la percentuale di completamento di un'attività specifica
+							printf("1 - MODIFICA COMPLETAMENTO ATTIVITA' \n"); //Permette di modificare la percentuale di completamento di un'attività specifica
 							scanf("%d", &modifica);
 							getchar();
 							
