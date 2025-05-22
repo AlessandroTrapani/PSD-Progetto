@@ -205,7 +205,8 @@ int main()
 	free(nuovo->data_inizio);
 	free(nuovo->priorita);
 	free(nuovo);
-	
+
+	//Richiama al funzione per liberare la memoria allocata per tutti i nodi della lista
 	libera_lista(l);
 	
 	return 0;
