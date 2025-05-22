@@ -42,7 +42,7 @@ int main()
 	}
 	else
 	{
-		printf("File caricato correttamente, ");
+		printf("File caricato correttamente. \n");
 		conta_righe=0;
 		
 		//Lettura riga per riga del file
@@ -125,14 +125,6 @@ int main()
 				l = consList(*nuovo, l); //Aggiunta attività alla lista
 			}
 		}
-		if(conta_righe>=9)
-		{
-			printf("attivita' salvate caricate. \n");
-		}
-		else
-		{
-			printf("nessuna attivita' salvata presente. \n");	
-		}
 		fclose(registro);
 	}
 	
@@ -213,6 +205,8 @@ int main()
 	free(nuovo->data_inizio);
 	free(nuovo->priorita);
 	free(nuovo);
+	
+	libera_lista(l);
 	
 	return 0;
 }
