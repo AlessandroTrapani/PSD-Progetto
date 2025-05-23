@@ -153,8 +153,9 @@ void modifica_lista(list l)
 }
 
 //Funzione per visualizzare e copiare sul file le attivita'  presenti nella lista
-void report_settimanale(list l,FILE *ptr)
+void report_settimanale(list l)
 {
+    FILE *ptr;
     int i=1;
     time_t t=time(NULL); 
     struct tm *oggi=localtime(&t); //Dichiarazione di una struct per memorizzare la data di sistema
