@@ -160,9 +160,9 @@ int main()
 							//Altro menù interattivo per l'utente
 							printf("0 - TORNA AL MENU' PRINCIPALE \n");
 							printf("1 - MODIFICA COMPLETAMENTO ATTIVITA' \n"); //Permette di modificare la percentuale di completamento di un'attività specifica
-							scanf("%d", &modifica);
+							if(scanf("%d", &modifica)==1)
+							{
 							getchar();
-							
 							switch(modifica)
 							{
 								case 0:
@@ -172,6 +172,7 @@ int main()
 										break;
 								default:
 										printf("Scelta non valida \n");
+							}
 							}
 						}
 						break;
