@@ -133,11 +133,9 @@ La funzione stampa a video e copia sul file "report.txt" l'elenco delle attivit√
 
 Parametri:
 l: lista di tipo list da visualizzare.
-ptr: puntatore al file su cui copiare i dati.
 
 Pre-condizione:
 - La lista `l` deve esistere e contenere almeno un elemento modificabile.
--Il puntatore 'ptr' deve essere valido e riferirsi a un file aperto correttamente.
 
 Post-condizione:
 -I dati vengono visualizzati a schermo e copiati sul file.
@@ -145,7 +143,7 @@ Post-condizione:
 Ritorna:
 Nessun valore (void).
 */
-void report_settimanale(list l,FILE *ptr);
+void report_settimanale(list l);
 
 /*
 Funzione: libera_lista
