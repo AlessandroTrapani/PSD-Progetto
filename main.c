@@ -8,7 +8,6 @@
 int main()
 {
 	FILE *registro;
-	FILE *report;
 	int salvate;
 	int conta_righe;
 	int scelta,modifica;
@@ -42,7 +41,7 @@ int main()
 	}
 	else
 	{
-		printf("File caricato correttamente,esci dal programma premendo 0 per salvare correttamente le attivita' di studio. \n");
+		printf("File caricato correttamente. \nEsci dal programma premendo 0 per salvare correttamente le attivita' di studio. \n");
 		conta_righe=0;
 		
 		//Lettura riga per riga del file
@@ -183,7 +182,7 @@ int main()
 						}
 						else
 						{
-							report_settimanale(l,report); //Viene richiamata la funzione report_settimanale,stampa a video il contenuto della lista e lo salva nel file report
+							report_settimanale(l); //Viene richiamata la funzione report_settimanale,stampa a video il contenuto della lista e lo salva nel file report
 						}
 						break;		
 				default: //In caso di scelta non valida, il programma richiede di nuovo l'input della scelta
