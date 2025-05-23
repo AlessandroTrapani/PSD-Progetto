@@ -122,13 +122,22 @@ void modifica_lista(list l)
 	do
 	{
 	    printf("Inserisci il numero dell'attivita' da modificare: ");
-	    scanf("%d",&indice);
+	    if(scanf("%d",&indice)==1)
+	    {
 	    getchar();
 	    
 	    if(indice<1||indice>lunghezza)
 	    {
 	    	printf("Numero attivita' non valido. Inserisci un numero compreso tra 1 e %d \n",lunghezza);
 	    }
+	    }
+		else //Se viene inserito un carattere non valido, viene richiesto un nuovo input 
+		{
+			printf("Carattere non valido \n");
+			indice= -1;
+			while(getchar()!='\n'); //Svuota il buffer
+		}
+
 	}while(indice<1||indice>lunghezza);
 	
 	//Arriva alla posizione specificata
