@@ -30,26 +30,27 @@ list consList(attivita_studio val, list l)
 {
     struct node *nuovo; // Dichiarazione di un puntatore a un nuovo nodo
     nuovo =(struct node *) malloc(sizeof(struct node)); // Allocazione della memoria per il nuovo nodo
-    if (nuovo == NULL)  // Verifica se l'allocazione della memoria e' riuscita
+    	if (nuovo == NULL)  // Verifica se l'allocazione della memoria e' riuscita
 	{ 
 		printf("Errore allocazione di memoria \n");
 	    	exit (1);
         }
-    else //Copia dei campi dell'attivita'  nella nuova struttura nodo(nuovo) tramite strdup per allocare nuova memoria e copiare il contenuto delle stringhe in modo che ogni nodo abbia i propri dati indipendenti
-    {
+   	else //Copia dei campi dell'attivita'  nella nuova struttura nodo(nuovo) tramite strdup per allocare nuova memoria e copiare il contenuto delle stringhe in modo che ogni nodo abbia i propri dati indipendenti
+   	{
 	    nuovo->value.descrizione = strdup(val.descrizione);
 	    nuovo->value.corso = strdup(val.corso);
 	    nuovo->value.data_scadenza = strdup(val.data_scadenza);
 	    nuovo->value.data_inizio = strdup(val.data_inizio);
 	    nuovo->value.priorita = strdup(val.priorita);
+	    
 	    //Copia diretta dei campi di tipo intero
 	    nuovo->value.tempo_stimato = val.tempo_stimato;
 	    nuovo->value.completamento = val.completamento;
 	    
 	    //Inserimento in testa alla lista
-		nuovo->next=l;
-		l=nuovo;
-    }
+	    nuovo->next=l;
+	    l=nuovo;
+    	}
 	
     return l; // Restituisce il puntatore alla lista aggiornata
 }
@@ -78,29 +79,29 @@ void outputList(list l)
 int output_file(list l,FILE *ptr)
 {
     int i=0;
-	ptr=fopen(file_registro, "w");
+    ptr=fopen(file_registro, "w");
     if(ptr==NULL)
     {
     	printf("Errore apertura file \n");
     	return 0;
     }
-	else
+    else
+    {
+	while (l != NULL) 
 	{
-		while (l != NULL) 
-		{
-		        fprintf(ptr,"%d \n",++i);
-			fprintf(ptr,"%s \n", l->value.descrizione);
-		        fprintf(ptr,"%s \n", l->value.corso);
-		        fprintf(ptr,"%s \n", l->value.data_inizio);
-		        fprintf(ptr,"%s \n", l->value.data_scadenza);
-		        fprintf(ptr,"%d ore \n", l->value.tempo_stimato);
-		        fprintf(ptr,"%d%% \n", l->value.completamento);
-		        fprintf(ptr,"%s \n", l->value.priorita);
-		        fprintf(ptr,"\n");
-		        l = l->next; // Passa al nodo successivo
-	        }
-	    fclose(ptr);
+		fprintf(ptr,"%d \n",++i);
+		fprintf(ptr,"%s \n", l->value.descrizione);
+		fprintf(ptr,"%s \n", l->value.corso);
+		fprintf(ptr,"%s \n", l->value.data_inizio);
+		fprintf(ptr,"%s \n", l->value.data_scadenza);
+		fprintf(ptr,"%d ore \n", l->value.tempo_stimato);
+		fprintf(ptr,"%d%% \n", l->value.completamento);
+		fprintf(ptr,"%s \n", l->value.priorita);
+		fprintf(ptr,"\n");
+		l = l->next; // Passa al nodo successivo
 	}
+	    	fclose(ptr);
+    }
 	return i;
 }
 
@@ -109,7 +110,7 @@ void modifica_lista(list l)
 {
     int i,indice;
     int lunghezza=0;
-	list temp=l;
+    list temp=l;
 	
 	//Conta il numero di attivita' 
 	while(temp!=NULL)
@@ -124,23 +125,23 @@ void modifica_lista(list l)
 	    printf("Inserisci il numero dell'attivita' da modificare: ");
 	    if(scanf("%d",&indice)==1)
 	    {
-	    getchar();
+	    	getchar();
 	    
-	    if(indice<1||indice>lunghezza)
+	    	if(indice<1||indice>lunghezza)
+	    	{
+	    		printf("Numero attivita' non valido. Inserisci un numero compreso tra 1 e %d \n",lunghezza);
+	    	}
+	    }
+	    else //Se viene inserito un carattere non valido, viene richiesto un nuovo input 
 	    {
-	    	printf("Numero attivita' non valido. Inserisci un numero compreso tra 1 e %d \n",lunghezza);
+		printf("Carattere non valido \n");
+		indice= -1;
+		while(getchar()!='\n'); //Svuota il buffer
 	    }
-	    }
-		else //Se viene inserito un carattere non valido, viene richiesto un nuovo input 
-		{
-			printf("Carattere non valido \n");
-			indice= -1;
-			while(getchar()!='\n'); //Svuota il buffer
-		}
 
 	}while(indice<1||indice>lunghezza);
 	
-	//Arriva alla posizione specificata
+    //Arriva alla posizione specificata
     for(i=1;i<indice;i++)
     {
     	l=l->next;
@@ -174,8 +175,8 @@ void report_settimanale(list l)
     {
     	printf("Errore apertura file \n");
     }
-	 	printf("REPORT DEL GIORNO: %d/%d/%d \n",oggi->tm_mday,oggi->tm_mon+1,oggi->tm_year+1900);
-		fprintf(ptr,"REPORT DEL GIORNO: %d/%d/%d \n",oggi->tm_mday,oggi->tm_mon+1,oggi->tm_year+1900);
+	printf("REPORT DEL GIORNO: %d/%d/%d \n",oggi->tm_mday,oggi->tm_mon+1,oggi->tm_year+1900);
+	fprintf(ptr,"REPORT DEL GIORNO: %d/%d/%d \n",oggi->tm_mday,oggi->tm_mon+1,oggi->tm_year+1900);
 	while (l != NULL) 
 	{
 		printf("ATTIVITA' NUMERO %d \n",i);
