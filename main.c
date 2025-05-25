@@ -15,12 +15,12 @@ int main()
     	size_t lunghezza;
     	char *tmp;
     
-    //Allocazione dinamica per una nuova attività
+    	//Allocazione dinamica per una nuova attività
 	attivita_studio *nuovo=(attivita_studio *) malloc(sizeof(attivita_studio));
 	if (nuovo == NULL) 
 	{
-        printf("Errore allocazione di memoria. \n");
-        return 1;
+        	printf("Errore allocazione di memoria. \n");
+        	return 1;
     	}
     
     //Inizializzazione dei puntatori a NULL
@@ -60,44 +60,44 @@ int main()
 						break;
 				case 1: 
 						tmp = realloc(nuovo->descrizione, lunghezza + 1);
-					    if (tmp == NULL) 
+					   	if (tmp == NULL) 
 						{
-					        printf("Errore allocazione memoria.\n");
-					        exit(1);
+					        	printf("Errore allocazione memoria.\n");
+					        	exit(1);
 					    	}
-					    nuovo->descrizione = tmp;
-					    strcpy(nuovo->descrizione, buffer);
-					    break;
+					        nuovo->descrizione = tmp;
+					        strcpy(nuovo->descrizione, buffer);
+					        break;
 				case 2:
 						tmp = realloc(nuovo->corso, lunghezza + 1);
-					    if (tmp == NULL) 
+					    	if (tmp == NULL) 
 						{
-					        printf("Errore allocazione memoria.\n");
-					        exit(1);
+					        	printf("Errore allocazione memoria.\n");
+					        	exit(1);
 					    	}
-					    nuovo->corso = tmp;
-					    strcpy(nuovo->corso, buffer);
-					    break;
+					        nuovo->corso = tmp;
+					        strcpy(nuovo->corso, buffer);
+					        break;
 				case 3:
 						tmp = realloc(nuovo->data_inizio, lunghezza + 1);
-				        if (tmp == NULL) 
+				        	if (tmp == NULL) 
 						{ 
 							printf("Errore allocazione memoria.\n"); 
 							exit(1); 
 						}
-				        nuovo->data_inizio = tmp;
-				        strcpy(nuovo->data_inizio, buffer);
-				        break;
+				                nuovo->data_inizio = tmp;
+				        	strcpy(nuovo->data_inizio, buffer);
+				        	break;
 				case 4:
 						tmp = realloc(nuovo->data_scadenza, lunghezza + 1);
-				        if (tmp == NULL) 
+				        	if (tmp == NULL) 
 						{ 
 							printf("Errore allocazione memoria.\n"); 
 							exit(1); 
 						} 
-				        nuovo->data_scadenza = tmp;
-				        strcpy(nuovo->data_scadenza, buffer);
-				        break;
+				        	nuovo->data_scadenza = tmp;
+				        	strcpy(nuovo->data_scadenza, buffer);
+				        	break;
 				case 5:
 						sscanf(buffer, "%d", &nuovo->tempo_stimato);
 						break;
@@ -112,8 +112,8 @@ int main()
 							exit(1);
 						}
 						nuovo->priorita = tmp;
-					    strcpy(nuovo->priorita, buffer);
-					    break;
+					    	strcpy(nuovo->priorita, buffer);
+					    	break;
 				case 8:
 						break;	
 			}
@@ -162,17 +162,17 @@ int main()
 							printf("1 - MODIFICA COMPLETAMENTO ATTIVITA' \n"); //Permette di modificare la percentuale di completamento di un'attività specifica
 							if(scanf("%d", &modifica)==1)
 							{
-							getchar();
-							switch(modifica)
-							{
-								case 0:
+								getchar();
+								switch(modifica)
+								{
+									case 0:
 										break;
-								case 1: //Richiama la funzione modifica_lista per modificare la percentuale
+									case 1: //Richiama la funzione modifica_lista per modificare la percentuale
 										modifica_lista(l);
 										break;
-								default:
+									default:
 										printf("Scelta non valida \n");
-							}
+								}
 							}
 						}
 						break;
